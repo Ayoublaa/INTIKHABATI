@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+/* ── THÈME SOMBRE (défaut) ─────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg:        #030b14;
+  --bg2:       #071526;
+  --bg3:       #0c1f35;
+  --accent:    #00d4ff;
+  --accent2:   #0066ff;
+  --green:     #00ff88;
+  --red:       #ff3b5c;
+  --yellow:    #ffb400;
+  --text:      #e8f4ff;
+  --muted:     #4a7090;
+  --muted2:    #2a4060;
+  --border:    rgba(0, 212, 255, 0.15);
+  --border2:   rgba(0, 212, 255, 0.08);
+  --glow:      0 0 30px rgba(0, 212, 255, 0.15);
+  --grid-color: rgba(0, 212, 255, 0.03);
+}
+
+/* ── THÈME CLAIR ───────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:        #f0f4ff;
+  --bg2:       #ffffff;
+  --bg3:       #e8eeff;
+  --accent:    #0066cc;
+  --accent2:   #0044aa;
+  --green:     #00884a;
+  --red:       #cc2244;
+  --yellow:    #cc7700;
+  --text:      #1a2a3a;
+  --muted:     #4a6080;
+  --muted2:    #7090b0;
+  --border:    rgba(0, 100, 200, 0.2);
+  --border2:   rgba(0, 100, 200, 0.1);
+  --glow:      0 0 30px rgba(0, 100, 200, 0.1);
+  --grid-color: rgba(0, 100, 200, 0.04);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background:  var(--bg);
+  color:       var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  min-height:  100vh;
+  overflow-x:  hidden;
+  transition:  background 0.3s ease, color 0.3s ease;
+}
+
+/* Animated background grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+  transition: background-image 0.3s ease;
+}
+
+#root { position: relative; z-index: 1; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,212,255,0.3); }
+  50%       { box-shadow: 0 0 30px rgba(0,212,255,0.7); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

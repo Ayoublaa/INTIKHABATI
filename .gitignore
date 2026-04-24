@@ -1,0 +1,57 @@
+# ======================================================
+#  CivicChain / Intikhabati — .gitignore
+#  NE JAMAIS committer les fichiers listés ci-dessous
+# ======================================================
+
+# ── Données sensibles ──────────────────────────────────
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# ── Dépendances Node.js ────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ── Logs ───────────────────────────────────────────────
+*.log
+backend.log
+frontend.log
+hardhat.log
+**/backend.log
+
+# ── Hardhat / Ethereum ─────────────────────────────────
+hardhat2/artifacts/
+hardhat2/cache/
+hardhat2/.hardhat/
+hardhat2/typechain/
+hardhat2/typechain-types/
+hardhat2/deployments/
+
+# ── React / Frontend build ─────────────────────────────
+frontend/build/
+frontend/.eslintcache
+
+# ── OS / Éditeurs ──────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+*.swo
+
+# ── Claude AI (fichiers de session locale) ─────────────
+.claude/
+
+# ── Fichiers temporaires Python ────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+
+# ── Lock files optionnels ──────────────────────────────
+# package-lock.json   ← décommente si tu veux ignorer
+# yarn.lock
+
+# ── Fichiers de couverture / test ──────────────────────
+coverage/
+.nyc_output/

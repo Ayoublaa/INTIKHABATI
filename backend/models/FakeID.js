@@ -30,6 +30,18 @@ const FakeIDSchema = new mongoose.Schema({
     required: true,
   },
 
+  // Quartier / arrondissement
+  district: {
+    type: String,
+    default: null,
+  },
+
+  // Région administrative du Maroc
+  region: {
+    type: String,
+    default: null,
+  },
+
   // Profession (utilisée pour la liste noire militaire)
   profession: {
     type: String,

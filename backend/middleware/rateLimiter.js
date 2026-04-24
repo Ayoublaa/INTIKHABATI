@@ -1,31 +1,35 @@
-const rateLimit = require("express-rate-limit");
+const rateLimit = require('express-rate-limit');
 
-// Pour les tests : 50 tentatives par minute
-const phantomLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000,
-  max: 50,
+// Strict: voter registration (5 per 15min per IP)
+const registerLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Trop de tentatives. Réessayez dans 1 minute.",
-    retryAfter: "1 minute",
-  },
-  handler: (req, res, next, options) => {
-    console.warn(`⚠️  Rate limit – IP: ${req.ip} – Route: ${req.path}`);
-    res.status(429).json(options.message);
-  },
+  message: { success: false, message: 'Too many registration attempts. Please wait 15 minutes.' },
 });
 
-const generalLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 1000,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: "Trop de requêtes. Réessayez plus tard.",
-  },
+// Admin actions (300 per 15min per IP)
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  message: { success: false, message: 'Admin rate limit exceeded.' },
 });
 
-module.exports = { phantomLimiter, generalLimiter };
+// Public read endpoints (120 per min per IP)
+const publicLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 120,
+  message: { success: false, message: 'Too many requests.' },
+});
+
+// Aliases for legacy routes (phantom.js, vote.js)
+const phantomLimiter  = registerLimiter;
+const generalLimiter  = publicLimiter;
+const voteLimiter     = registerLimiter;
+
+module.exports = {
+  registerLimiter, adminLimiter, publicLimiter,
+  // legacy aliases
+  phantomLimiter, generalLimiter, voteLimiter,
+};
